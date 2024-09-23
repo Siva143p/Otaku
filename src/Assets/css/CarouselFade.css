@@ -2,9 +2,8 @@
 .carousel--box {
   width: 100vw !important;
   height: 120vh !important;
-  background-color: aqua;
-  /* position: relative; */
 }
+
 .carousel-inner {
   width: 100%;
   height: 100%;
@@ -16,14 +15,13 @@
 
 .carousel--slides img {
   width: 100%;
-  max-height: 100% !important;
+  height: 100% !important;
   object-fit: cover;
 }
 
 .carousel-control-prev,
 .carousel-control-next {
   width: 5% !important;
-  /* left: 0 !important; */
   margin: auto 0;
 }
 
@@ -34,7 +32,6 @@
 
 .carousel-indicators button {
   width: 1rem !important;
-  /* border-radius: 0.5rem !important; */
 }
 
 .carousel-indicators .active {
@@ -53,11 +50,10 @@
   height: 100%;
   left: 0 !important;
   bottom: 0 !important;
-  /* background-color: aqua !important; */
   background: linear-gradient(
     to right,
-    rgb(0, 0, 0, 0.9) 55%,
-    rgb(0, 0, 0, 0.5) 85%,
+    rgb(0, 0, 0, 0.7) 35%,
+    rgb(0, 0, 0, 0.3) 90%,
     transparent
   );
   text-align: left !important;
@@ -66,20 +62,15 @@
 .Carousel--content {
   height: 90%;
   width: 70%;
-  /* background-color: aqua; */
   margin-left: 3rem;
   margin-top: 3rem;
   font-size: 1rem;
-  /* margin-bottom: 1rem; */
 }
 
 .title {
   width: 70%;
   height: 9rem !important;
-  /* border: 1px rgb(255, 255, 255) solid; */
   padding: 0 2rem;
-  /* overflow: hidden !important;
-  box-sizing: border-box !important; */
 }
 
 .title img {
@@ -91,16 +82,15 @@
 .info {
   width: 100%;
   max-height: 33%;
-  /* border: 1px solid rgb(255, 255, 255); */
   padding: 1rem 2rem;
   color: rgb(211, 210, 208);
 }
 
 .btns {
+  display: flex;
   width: 100%;
   height: 20%;
   padding: 0 2rem;
-  /* border: 1px solid rgb(255, 255, 255); */
   margin-top: 1rem;
 }
 
@@ -117,4 +107,79 @@
   padding: 0.5rem;
   background-color: transparent;
   color: rgb(248, 119, 119);
+}
+
+@media screen and (max-width: 800px) {
+  .carousel--box {
+    width: 100vw !important;
+    height: 180vh !important;
+    background-color: aqua;
+  }
+  .Carousel--content {
+    position: absolute;
+    width: 100vw;
+    bottom: -27%;
+    left: 0%;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  .btns {
+    width: auto;
+    height: auto;
+  }
+
+  .carousel-caption {
+    width: 100%;
+    height: 100%;
+    left: 0 !important;
+    bottom: 0 !important;
+    background: linear-gradient(
+      to top,
+      rgb(0, 0, 0) 35%,
+      rgb(0, 0, 0, 0.9) 55%,
+      rgb(0, 0, 0, 0.5) 75%,
+      transparent
+    );
+    text-align: left !important;
+  }
+
+  .carousel-indicators {
+    bottom: 0rem !important;
+    left: 0rem !important;
+  }
+
+  .carousel-control-prev,
+  .carousel-control-next {
+    display: none !important;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .carousel--box {
+    height: 110vh !important;
+  }
+
+  .Carousel--content {
+    bottom: -10%;
+  }
+  .btns {
+    width: 100%;
+    padding: 0 1rem;
+    gap: 2%;
+  }
+  .btns a {
+    width: 88%;
+  }
+  .ep--btn {
+    width: 100% !important;
+    text-align: center;
+  }
+  .bk-mrk {
+    width: 10%;
+  }
 }

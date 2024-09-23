@@ -1,17 +1,17 @@
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
-import "./Assets/css/Header.css";
+import "../../css/Header.css";
 
 import React from "react";
-import Home from "./Home";
-import Browse from "./Browse";
-import SavedList from "./Assets/features/saveAnime/SavedList";
-import Profile from "./Profile";
+import Home from "../../../Home";
+import Browse from "./Browse/Browse";
+import SavedList from "../saveAnime/SavedList";
+import Profile from "../../../Profile";
 import { navItemsLeft, navItemsRight } from "./NavItems";
 import { useState } from "react";
-import BrowseDropdown from "./BrowseDropdown";
-import StreamingPage from "./StreamingPage";
-import Search from "./Search";
-import News from "./News";
+import BrowseDropdown from "./Browse/BrowseDropdown";
+import StreamingPage from "../../../StreamingPage";
+import Search from "../../../Search";
+import News from "../../../News";
 
 import {
   Disclosure,
@@ -24,8 +24,11 @@ import {
 } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { MdAccountCircle } from "react-icons/md";
-import CreateAccount from "./Assets/features/forms/CreateAccount";
-import Login from "./Assets/features/forms/Login";
+import CreateAccount from "../forms/CreateAccount";
+import Login from "../forms/Login";
+import Success from "../forms/Success";
+import ForgetPassword from "../forms/ForgetPassword";
+import UserOptions from "../user/UserOptions";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -36,9 +39,11 @@ export default function Header({ aniData, user, islogged }) {
   const [isLinkClicked, setIsLinkClicked] = useState(false);
   console.log("Browse DropDown : ", browseDropdown);
   console.log("Use in the header : ", user);
+  console.log(isLinkClicked, islogged);
 
   return (
     <Router>
+      {isLinkClicked && islogged ? <UserOptions /> : ""}
       <Disclosure as="nav" className="bg-neutral-800 sticky top-0 z-40">
         <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
           <div className="relative flex h-16 items-center justify-between">
@@ -139,7 +144,7 @@ export default function Header({ aniData, user, islogged }) {
                   <MenuButton className="flex hover:bg-black px-3 py-3">
                     <span
                       className="absolute -inset-1.5"
-                      onClick={() => setIsLinkClicked(false)}
+                      onClick={() => setIsLinkClicked(!isLinkClicked)}
                     />
                     <span className="sr-only">Open user menu</span>
                     <MdAccountCircle size={24} style={{ color: "white" }} />
@@ -150,7 +155,7 @@ export default function Header({ aniData, user, islogged }) {
                   className={
                     islogged
                       ? "hidden"
-                      : isLinkClicked
+                      : !isLinkClicked
                         ? "hidden"
                         : "absolute z-10 top-12 mt-2 w-96 text-left origin-top-right bg-black py-1 shadow-lg ring-1 ring-black ring-opacity-5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
                   }
@@ -249,6 +254,10 @@ export default function Header({ aniData, user, islogged }) {
         <Route path="/createaccount" element={<CreateAccount />}></Route>
 
         <Route path="/login" element={<Login />}></Route>
+
+        <Route path="/forgetPassword" element={<ForgetPassword />}></Route>
+
+        <Route path="/success" element={<Success />}></Route>
       </Routes>
     </Router>
   );

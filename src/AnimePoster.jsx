@@ -14,7 +14,7 @@ function AnimePoster({ anime, btnColor }) {
       <div className="w-full h-full relative">
         <img src={anime.image} alt="" className="size-full object-cover" />
         <div
-          className="absolute px-8 py-3 rounded bottom-6 right-24 text-2xl font-extrabold text-white"
+          className="absolute px-8 py-3 rounded bottom-6 right-24 text-2xl font-extrabold text-white max-sm:px-4 max-sm:py-2"
           style={{ backgroundColor: btnColor }}
         >
           Watch Now

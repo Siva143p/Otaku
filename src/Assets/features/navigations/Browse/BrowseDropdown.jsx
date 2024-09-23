@@ -5,7 +5,8 @@ import {
   BrowseDropDownList2,
   BrowseDropDownList3,
   BrowseDropDownList4,
-} from "./NavItems";
+} from "../NavItems";
+// import { BrowseDropDownList1 } from "../NavItems";
 import { Link } from "react-router-dom";
 
 function BrowseDropdown() {

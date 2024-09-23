@@ -1,83 +1,56 @@
-// import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+// import { fetchByAlphabets, fetchSaved, fetchPopular } from "./APIwithfilter"; // Assuming you have multiple APIs
+import { fetchByAlphabets, fetchSaved } from "./APIwithfilter";
 
-// const initialState = {
-//   Animes: [],
-//   savedAnimes: JSON.parse(localStorage.getItem("SavedAnimes")) || [],
-//   filterdAnimes: [],
-//   lang: "all",
-//   media: "all",
-// };
+// Async thunks for different pages
+export const fetchAnimesByAlphabet = createAsyncThunk(
+  "filter/fetchAnimesByAlphabet",
+  async (_, { getState }) => {
+    const state = getState().filter;
+    const { lang, media } = state;
+    const response = await fetchByAlphabets(lang, media);
+    return response;
+  },
+);
 
-// const filterSlice = createSlice({
-//   name: "filter",
-//   initialState,
-//   reducers: {
-//     filterAnime(state, action) {
-//       if (action.payload !== "all") {
-//         action.payload === "sub"
-//           ? (state.filterdAnimes = state.Animes.filter((anime) => !anime.dub))
-//           : (state.filterdAnimes = state.Animes.filter((anime) => anime.dub));
+// export const fetchSavedAnimes = createAsyncThunk(
+//   "filter/fetchSavedAnimes",
+//   async (_, { getState }) => {
+//     const state = getState().filter;
+//     const { lang, media, userId } = state;
+//     console.log(lang, media, userId);
 
-//         if (action.payload !== "all") {
-//           action.payload === "series"
-//             ? (state.filterdAnimes = state.filterdAnimes.filter(
-//                 (anime) => anime.type !== "Movie",
-//               ))
-//             : (state.filterdAnimes = state.filterdAnimes.filter(
-//                 (anime) => anime.type !== "Series",
-//               ));
-//         }
-//       }
-//     },
+//     const response = await fetchSaved(userId, lang, media);
+//     return response;
 //   },
-// });
+// );
 
-// export const selectFilterLang = (state) => state.filter.lang;
-// export const selectFilterMedia = (state) => state.filter.media;
-// export const selectFilteredAnimes = (state) => state.filter.filterdAnimes;
-// export const { filterAnime } = filterSlice.actions;
-// export default filterSlice.reducer;
-
-import { createSlice } from "@reduxjs/toolkit";
+export const fetchPopularAnimes = createAsyncThunk(
+  "filter/fetchPopularAnimes",
+  async (_, { getState }) => {
+    const state = getState().filter;
+    const { lang, media } = state;
+    const response = await fetchPopular(lang, media);
+    return response;
+  },
+);
 
 const initialState = {
-  Animes: [], // List of all animes
-  filteredAnimes: [],
-  page: "",
-  lang: JSON.parse(localStorage.getItem("FilterObj"))?.lang || "all", // Default to 'all' if not in localStorage
-  media: JSON.parse(localStorage.getItem("FilterObj"))?.media || "all", // Default to 'all' if not in localStorage
-  SavedAnimesFiltered: [],
-  PopularAnimesFiltered: [],
+  Animes: [],
+  lang: "all",
+  media: "all",
+  userId: "66e181f173f79fe09d22f09b",
+  page: "alphabets", // default page
+  status: "idle", // 'idle' | 'loading' | 'succeeded' | 'failed'
+  error: null,
 };
 
 const filterSlice = createSlice({
   name: "filter",
   initialState,
   reducers: {
-    setAnimes(state, action) {
-      state.Animes = action.payload;
-    },
-
-    setFilteredAnimesForPage(state, action) {
-      if (action.payload === "saved") {
-        localStorage.setItem(
-          "SavedAnimesFiltered",
-          JSON.stringify(state.filteredAnimes),
-        );
-        state.SavedAnimesFiltered =
-          JSON.parse(localStorage.getItem("SavedAnimesFiltered")) || [];
-      } else {
-        localStorage.setItem(
-          "PopularAnimesFiltered",
-          JSON.stringify(state.filteredAnimes),
-        );
-        state.PopularAnimesFiltered =
-          JSON.parse(localStorage.getItem("PopularAnimesFiltered")) || [];
-      }
-    },
-
     setFilterKey(state, action) {
-      const { lang, media } = action.payload;
+      const { lang, media, page } = action.payload;
 
       const obj = {
         lang: lang || state.lang,
@@ -87,43 +60,60 @@ const filterSlice = createSlice({
 
       state.lang = obj.lang;
       state.media = obj.media;
+      state.page = page || state.page;
 
-      localStorage.setItem("FilterObj", JSON.stringify(obj));
+      // Persist filter settings to localStorage
+      // localStorage.setItem("FilterObj", JSON.stringify(obj));
     },
-
-    filterAnime(state) {
-      const { lang, media } = state;
-
-      // Filter by language (sub or dub)
-      state.filteredAnimes =
-        lang !== "all"
-          ? lang === "sub"
-            ? state.Animes.filter((anime) => anime.dub || anime.sub) // Filter subbed content
-            : state.Animes.filter((anime) => anime.dub) // Filter dubbed content
-          : state.Animes;
-
-      // Filter by media type (series or movie)
-      state.filteredAnimes =
-        media !== "all"
-          ? media === "series"
-            ? state.filteredAnimes.filter((anime) => anime.type !== "Movie")
-            : state.filteredAnimes.filter((anime) => anime.type !== "Series")
-          : state.filteredAnimes;
-    },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchAnimesByAlphabet.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(fetchAnimesByAlphabet.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        console.log("Fetched Animes:", action.payload);
+        state.Animes = action.payload;
+      })
+      .addCase(fetchAnimesByAlphabet.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message;
+      })
+      // .addCase(fetchSavedAnimes.pending, (state) => {
+      //   state.status = "loading";
+      // })
+      // .addCase(fetchSavedAnimes.fulfilled, (state, action) => {
+      //   state.status = "succeeded";
+      //   console.log("Fetched Animes:", action.payload);
+      //   state.Animes = action.payload;
+      // })
+      // .addCase(fetchSavedAnimes.rejected, (state, action) => {
+      //   state.status = "failed";
+      //   state.error = action.error.message;
+      // })
+      .addCase(fetchPopularAnimes.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(fetchPopularAnimes.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.Animes = action.payload;
+      })
+      .addCase(fetchPopularAnimes.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message;
+      });
   },
 });
 
-export const selectSavedAnimesFiltered = (state) =>
-  state.filter.SavedAnimesFiltered;
-export const selectPopularAnimesFiltered = (state) =>
-  state.filter.PopularAnimesFiltered;
+// Selectors
 export const selectFilterLang = (state) => state.filter.lang;
 export const selectFilterMedia = (state) => state.filter.media;
-export const selectFilteredAnimes = (state) => state.filter.filteredAnimes;
-export const {
-  filterAnime,
-  setFilterKey,
-  setAnimes,
-  setFilteredAnimesForPage,
-} = filterSlice.actions;
+export const selectFilteredAnimes = (state) => state.filter.Animes;
+export const selectStatus = (state) => state.filter.status;
+export const selectPage = (state) => state.filter.page;
+
+// Actions
+export const { setFilterKey } = filterSlice.actions;
+
 export default filterSlice.reducer;

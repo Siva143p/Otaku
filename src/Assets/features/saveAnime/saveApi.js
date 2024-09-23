@@ -1,6 +1,13 @@
-export const getSavedAnimes = async (listType, userId) => {
-  const url = `http://localhost:5500/api/findSavedAni?listType=${listType}&userId=${userId}`;
+export const getSavedAnimes = async (listType, userId, lang, media) => {
+  const url = `http://localhost:5500/api/findSavedAni?listType=${listType}&userId=${userId}&lang=${lang}&media=${media}`;
   const options = { method: "GET" };
+  console.log(
+    "all detail for fetchin saved animes: ",
+    listType,
+    userId,
+    lang,
+    media,
+  );
 
   try {
     const response = await fetch(url, options);

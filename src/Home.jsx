@@ -69,8 +69,11 @@ const Home = ({ AnimeData }) => {
     <div className="size-full text-white">
       <CarouselFade aniData={pplrAni} />
 
-      <div className="w-full relative z-10" style={{ marginTop: "-10rem" }}>
-        <div className="pl-12" style={{ marginBottom: "-2rem" }}>
+      <div
+        className="w-full relative z-10 max-lg:mt-0 lg:-mt-40"
+        // style={{ marginTop: "-10rem" }}
+      >
+        <div className="pl-12 max-sm:p-3" style={{ marginBottom: "-2rem" }}>
           <h2>Most Popular Animes</h2>
           <p>Check out the most Popular animes</p>
         </div>

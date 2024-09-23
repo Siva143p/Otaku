@@ -5,20 +5,19 @@ import { IoListOutline } from "react-icons/io5";
 import { LuHistory } from "react-icons/lu";
 import { GrNotification } from "react-icons/gr";
 import { LuGift } from "react-icons/lu";
-import { GrLogout } from "react-icons/gr";
 
 export const ul1 = [
-  { icon: <IoIosSwap />, pName: "Switch Profile" },
-  { icon: <IoIosSettings />, pName: "Settings" },
+  { icon: <IoIosSwap size={24} />, pName: "Switch Profile" },
+  { icon: <IoIosSettings size={24} />, pName: "Settings" },
 ];
 
 export const ul2 = [
-  { icon: <RiBookmarkLine />, pName: "Watchlist" },
-  { icon: <IoListOutline />, pName: "Crunchylists" },
-  { icon: <LuHistory />, pName: "History" },
+  { icon: <RiBookmarkLine size={24} />, pName: "Watchlist" },
+  { icon: <IoListOutline size={24} />, pName: "Crunchylists" },
+  { icon: <LuHistory size={24} />, pName: "History" },
 ];
 
 export const ul3 = [
-  { icon: <GrNotification />, pName: "Notifications" },
-  { icon: <LuGift />, pName: "Gift Card" },
+  { icon: <GrNotification size={24} />, pName: "Notifications" },
+  { icon: <LuGift size={24} />, pName: "Gift Card" },
 ];

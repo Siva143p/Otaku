@@ -4,6 +4,7 @@
   /* padding: 1rem 0; */
   /* background-color: aqua; */
   /* margin: 3rem 0; */
+  /* padding: 0 4rem; */
 }
 
 .react-multi-carousel-list {
@@ -131,11 +132,6 @@
   color: rgb(147, 147, 147);
 }
 
-/* .add--btn {
-  position: relative;
-  z-index: 9999;
-} */
-
 .is--saved {
   background-color: rgb(0, 0, 0);
   position: absolute;
@@ -144,16 +140,22 @@
   transform: rotate(45deg);
   width: 4rem;
   height: 3rem;
-  /* display: flex;
-  align-items: center;
-  justify-content: center; */
 }
 
 .is-saved--bkmrk {
-  /* padding: 1rem; */
   color: rgb(248, 119, 119);
   transform: rotate(-45deg);
   position: absolute;
   left: 1.6rem;
   bottom: 0.2rem;
+}
+
+@media only screen and (max-width: 600px) {
+  .product:last-child {
+    margin-left: 0.5rem !important;
+  }
+
+  .product:first-child {
+    margin-right: 0.5rem !important;
+  }
 }

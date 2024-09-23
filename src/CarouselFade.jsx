@@ -18,9 +18,22 @@ function CarouselFade({ aniData }) {
               <div className="title">
                 <img src={Item.title_image} alt="" />
               </div>
-              <div className="info">
+              <div className="info max-lg:hidden">
                 {/* <h3>First slide label</h3> */}
                 <p>{Item.synopsis.slice(0, 200) + "..."}</p>
+              </div>
+
+              <div className="m-0 lg:hidden">
+                <p className="m-0 font-semibold text-sm text-gray-500 text-center ">
+                  {Item.dub ? "Sub | Dub" : "Sub"} -{" "}
+                  {Item.genre.map((genre, index) =>
+                    index === Item.genre.length - 1
+                      ? genre + "."
+                      : index < 5
+                        ? genre + ", "
+                        : "...",
+                  )}
+                </p>
               </div>
 
               <div className="btns">
@@ -31,7 +44,9 @@ function CarouselFade({ aniData }) {
                   </button>
                 </Link>
 
-                <BookmarkButton page={"home--carou"} size={24} Anime={Item} />
+                <div className="bk-mrk">
+                  <BookmarkButton page={"home--carou"} size={24} Anime={Item} />
+                </div>
                 {/* <button className="Save--btn">
                   <CiBookmark size={24} />
                 </button> */}

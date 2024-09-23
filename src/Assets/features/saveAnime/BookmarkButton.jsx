@@ -30,7 +30,7 @@ function BookmarkButton({ page, size, Anime }) {
           : "bookmar--btn--carousel bookmar--btn"
       }
       id={
-        page === "search" || page === "animeRecommendation"
+        page === "search" || page === "animeRecommendation" || page === "Browse"
           ? "for--org--bookmark"
           : ""
       }

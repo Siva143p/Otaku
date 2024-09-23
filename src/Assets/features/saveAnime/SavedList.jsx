@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { GrBookmark } from "react-icons/gr";
-import { SavedPageNav } from "../../../NavItems";
+import { SavedPageNav } from "../navigations/NavItems";
 
 // import "../../css/SavedList.css";
 import { Link } from "react-router-dom";

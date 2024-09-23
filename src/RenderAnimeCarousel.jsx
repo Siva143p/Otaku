@@ -5,7 +5,7 @@ function RenderAnimeCarousel({ caption, content, anime, page }) {
   const renderAnimeCarouselForHome = () => {
     return (
       <div className="my-20">
-        <div className="pl-12" style={{ marginBottom: "-1.5rem" }}>
+        <div className="pl-12 max-sm:pl-3" style={{ marginBottom: "-1.5rem" }}>
           <h2>{caption}</h2>
           <p>{content}</p>
         </div>

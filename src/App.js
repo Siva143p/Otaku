@@ -1,6 +1,8 @@
 import "./Assets/css/App.css";
 import { useEffect, useState } from "react";
-import Header from "./Header";
+import Header from "./Assets/features/navigations/Header";
+import { setUserIdSaved } from "./Assets/features/saveAnime/savedSlice";
+import { useDispatch } from "react-redux";
 
 function App() {
   const [data, setData] = useState([]);
@@ -9,6 +11,7 @@ function App() {
   );
   const [user, setUser] = useState("");
   const [isloggedin, setIsloggedin] = useState(false);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -51,7 +54,9 @@ function App() {
 
           const res = await response.json();
           setUser(res);
+          dispatch(setUserIdSaved(res._id));
           setIsloggedin(true);
+          console.log("userId", res._id);
         } catch (error) {
           console.error("Error fetching account details: ", error.message);
         }
@@ -85,7 +90,7 @@ function App() {
     }
   };
 
-  console.log("User Out : ", user);
+  console.log("User Out : ", user._id);
 
   return (
     <div className="App">

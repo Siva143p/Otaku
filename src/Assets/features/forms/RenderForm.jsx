@@ -122,6 +122,10 @@ function RenderForm({ type, data }) {
     }
   };
 
+  const forgetPass = () => {
+    navigate("/forgetPassword");
+  };
+
   return (
     <>
       {isError && <ErrorComponent errorMsg={error} active={setIsError} />}
@@ -187,7 +191,10 @@ function RenderForm({ type, data }) {
                   Use at least 6 characters, do not use empty spaces
                 </p>
               ) : (
-                <p className="text-base font-semibold text-gray-500 hover:text-white cursor-pointer">
+                <p
+                  className="text-base font-semibold text-gray-500 hover:text-white cursor-pointer"
+                  onClick={() => forgetPass()}
+                >
                   Forgot Password?
                 </p>
               )}
